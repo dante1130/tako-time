@@ -11,15 +11,14 @@ fn main() {
         Commands::List(cmd_args) => {
             println!("List command: {:?}", cmd_args);
         },
-        Commands::Delete(cmd_args) => {
-            println!("Delete command: {:?}", cmd_args);
-        },
         Commands::Update(cmd_args) => {
             println!("Update command: {:?}", cmd_args);
+        },
+        Commands::Remove(cmd_args) => {
+            println!("Remove command: {:?}", cmd_args);
         },
         Commands::Complete(cmd_args) => {
             println!("Complete command: {:?}", cmd_args);
         },
     }
-
 }

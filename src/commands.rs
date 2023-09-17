@@ -5,7 +5,7 @@ pub enum Commands {
     Add(AddCommand),
     List(ListCommand),
     Update(UpdateCommand),
-    Delete(DeleteCommand),
+    Remove(RemoveCommand),
     Complete(CompleteCommand),
 }
 
@@ -32,7 +32,7 @@ pub struct UpdateCommand {
 }
 
 #[derive(Args, Debug)]
-pub struct DeleteCommand {
+pub struct RemoveCommand {
     #[arg(short, long)]
     pub name: String,
 }
