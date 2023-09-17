@@ -1,6 +1,6 @@
 use clap::{Subcommand, Args};
 
-#[derive(Subcommand)]
+#[derive(Subcommand, Debug)]
 pub enum Commands {
     Add(AddCommand),
     List(ListCommand),
@@ -9,7 +9,7 @@ pub enum Commands {
     Complete(CompleteCommand),
 }
 
-#[derive(Args)]
+#[derive(Args, Debug)]
 pub struct AddCommand {
     #[arg(short, long)]
     pub name: String,
@@ -17,13 +17,13 @@ pub struct AddCommand {
     pub time: f64,
 }
 
-#[derive(Args)]
+#[derive(Args, Debug)]
 pub struct ListCommand {
     #[arg(short, long)]
     pub name: Option<String>,
 }
 
-#[derive(Args)]
+#[derive(Args, Debug)]
 pub struct UpdateCommand {
     #[arg(short, long)]
     pub name: String,
@@ -31,13 +31,13 @@ pub struct UpdateCommand {
     pub time: f64,
 }
 
-#[derive(Args)]
+#[derive(Args, Debug)]
 pub struct DeleteCommand {
     #[arg(short, long)]
     pub name: String,
 }
 
-#[derive(Args)]
+#[derive(Args, Debug)]
 pub struct CompleteCommand {
     #[arg(short, long)]
     pub name: String,
