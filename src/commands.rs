@@ -9,37 +9,46 @@ pub enum Commands {
     Complete(CompleteCommand),
 }
 
+const TIME_ARGS_SIZE: usize = 4;
+
 #[derive(Args, Debug)]
 pub struct AddCommand {
-    #[arg(short, long)]
-    pub name: String,
-    #[arg(short, long)]
-    pub time: f64,
+    #[arg(long, num_args = 1..)]
+    pub name: Vec<String>,
+    #[arg(long, num_args = 1..=TIME_ARGS_SIZE)]
+    pub time: Vec<String>,
 }
 
 #[derive(Args, Debug)]
-pub struct ListCommand {
-    #[arg(short, long)]
-    pub name: Option<String>,
+pub struct ListCommand {}
+
+#[derive(Args, Debug)]
+pub struct LogTimeCommand {
+    #[arg(long)]
+    pub id: u32,
+    #[arg(long, num_args = 1..=TIME_ARGS_SIZE)]
+    pub time_logged: Vec<String>,
 }
 
 #[derive(Args, Debug)]
 pub struct UpdateCommand {
-    #[arg(short, long)]
-    pub name: String,
-    #[arg(short, long)]
-    pub time: f64,
+    #[arg(long)]
+    pub id: u32,
+    #[arg(long, num_args = 0..=TIME_ARGS_SIZE)]
+    pub time_spent: Option<Vec<String>>,
+    #[arg(long, num_args = 0..=TIME_ARGS_SIZE)]
+    pub time_estimated: Option<Vec<String>>,
 }
 
 #[derive(Args, Debug)]
 pub struct RemoveCommand {
-    #[arg(short, long)]
-    pub name: String,
+    #[arg(long)]
+    pub id: u32,
 }
 
 #[derive(Args, Debug)]
 pub struct CompleteCommand {
-    #[arg(short, long)]
-    pub name: String,
+    #[arg(long)]
+    pub id: u32,
 }
 
