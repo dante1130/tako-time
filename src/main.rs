@@ -1,8 +1,10 @@
-use tako_time::{commands::Commands, args::Args};
+use tako_time::{commands::Commands, args::Args, task_manager::TaskManager};
 use clap::Parser;
 
 fn main() {
     let args = Args::parse();
+
+    let mut task_manager = TaskManager::new();
 
     match &args.command {
         Commands::Add(cmd_args) => {
