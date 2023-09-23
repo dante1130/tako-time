@@ -4,6 +4,7 @@ use clap::{Subcommand, Args};
 pub enum Commands {
     Add(AddCommand),
     List(ListCommand),
+    LogTime(LogTimeCommand),
     Update(UpdateCommand),
     Remove(RemoveCommand),
     Complete(CompleteCommand),
