@@ -15,7 +15,7 @@ impl TaskManager {
     }
 
     pub fn add_task(&mut self, task: Task) {
-        self.tasks_map.insert(task.id, task);
+        self.tasks_map.insert(self.tasks_map.len() as u32, task);
     }
 
     pub fn get_task(&self, id: u32) -> Option<&Task> {

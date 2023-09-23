@@ -16,7 +16,7 @@ pub struct AddCommand {
     #[arg(long, num_args = 1..)]
     pub name: Vec<String>,
     #[arg(long, num_args = 1..=TIME_ARGS_SIZE)]
-    pub time: Vec<String>,
+    pub time_estimated: Vec<String>,
 }
 
 #[derive(Args, Debug)]
