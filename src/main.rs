@@ -21,9 +21,9 @@ fn main() {
 
             task_manager.add_task(task);
         }
-        Commands::List(_) => {
-            task_manager.list_tasks();
-        }
+
+        Commands::List(_) => task_manager.list_tasks(),
+
         Commands::LogTime(cmd_args) => {
             let time_logged = match TimeParser::parse(&cmd_args.time_logged) {
                 Ok(time) => time,
@@ -33,11 +33,21 @@ fn main() {
 
             task_manager.log_time(cmd_args.id, time_logged);
         }
-        Commands::Update(cmd_args) => {
-            let mut task_builder = TaskBuilder::new();
 
-            if let Some(time_spent) = &cmd_args.time_spent {
-                task_builder.time_spent(time_spent);
+        Commands::Update(cmd_args) => {
+            let task = match task_manager.get_task(cmd_args.id) {
+                Some(task) => task,
+                None => panic!("Task not found"),
+            };
+
+            let mut task_builder = TaskBuilder::from(task);
+
+            if let Some(name) = &cmd_args.name {
+                task_builder.name(name.join(" "));
+            }
+            
+            if let Some(name) = &cmd_args.time_spent {
+                task_builder.time_spent(name);
             }
 
             if let Some(time_estimated) = &cmd_args.time_estimated {
@@ -46,12 +56,10 @@ fn main() {
 
             task_manager.update_task(cmd_args.id, task_builder.build());
         }
-        Commands::Remove(cmd_args) => {
-            task_manager.remove_task(cmd_args.id);
-        }
-        Commands::Complete(cmd_args) => {
-            task_manager.complete_task(cmd_args.id);
-        }
+
+        Commands::Remove(cmd_args) => task_manager.remove_task(cmd_args.id),
+
+        Commands::Complete(cmd_args) => task_manager.complete_task(cmd_args.id)
     }
 
     match task_manager.save() {

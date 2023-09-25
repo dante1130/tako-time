@@ -36,6 +36,8 @@ pub struct UpdateCommand {
     #[arg(long, required = true)]
     pub id: u32,
     #[arg(long, num_args = 0..=TIME_ARGS_SIZE)]
+    pub name: Option<Vec<String>>,
+    #[arg(long, num_args = 0..=TIME_ARGS_SIZE)]
     pub time_spent: Option<Vec<String>>,
     #[arg(long, num_args = 0..=TIME_ARGS_SIZE)]
     pub time_estimated: Option<Vec<String>>,

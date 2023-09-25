@@ -22,6 +22,15 @@ impl TaskBuilder {
         }
     }
 
+    pub fn from(task: &Task) -> TaskBuilder {
+        TaskBuilder {
+            id: task.id,
+            name: task.name.clone(),
+            time_spent: task.time_spent,
+            time_estimated: task.time_estimated,
+        }
+    }
+
     pub fn id(&mut self, id: u32) -> &mut TaskBuilder {
         self.id = id;
         self

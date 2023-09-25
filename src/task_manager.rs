@@ -7,7 +7,8 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     task::{State, Task},
-    task_serializer::{TaskDeserializer, TaskSerializer}, time_parser::TimeParser,
+    task_serializer::{TaskDeserializer, TaskSerializer},
+    time_parser::TimeParser,
 };
 
 const TASK_FILE_PATH: &str = "tasks.json";
@@ -48,8 +49,14 @@ impl TaskManager {
         for task in self.tasks_map.values() {
             print!("ID: {}, ", task.id);
             print!("Name: {}, ", task.name);
-            print!("Time Spent: {}, ", TimeParser::duration_to_string(&task.time_spent));
-            print!("Time Estimate: {}, ", TimeParser::duration_to_string(&task.time_estimated));
+            print!(
+                "Time Spent: {}, ",
+                TimeParser::duration_to_string(&task.time_spent)
+            );
+            print!(
+                "Time Estimate: {}, ",
+                TimeParser::duration_to_string(&task.time_estimated)
+            );
             println!("State: {}, ", task.state);
         }
     }
@@ -72,8 +79,11 @@ impl TaskManager {
         self.tasks_map.values().collect()
     }
 
-    pub fn remove_task(&mut self, id: u32) -> Option<Task> {
-        self.tasks_map.remove(&id)
+    pub fn remove_task(&mut self, id: u32) {
+        match self.tasks_map.remove(&id) {
+            Some(_) => (),
+            None => panic!("Task with id {} does not exist", id),
+        }
     }
 
     pub fn complete_task(&mut self, id: u32) {
