@@ -1,6 +1,10 @@
 use clap::Parser;
 use tako_time::{
-    args::Args, commands::Commands, task_builder::TaskBuilder, task_manager::TaskManager, time_parser::{TimeParser, TimeParserError},
+    args::Args,
+    commands::Commands,
+    task_builder::TaskBuilder,
+    task_manager::TaskManager,
+    time_parser::{TimeParser, TimeParserError},
 };
 
 fn main() {
@@ -50,5 +54,10 @@ fn main() {
         Commands::Complete(cmd_args) => {
             task_manager.complete_task(cmd_args.id);
         }
+    }
+
+    match task_manager.save() {
+        Ok(_) => (),
+        Err(e) => panic!("Error: {}", e),
     }
 }

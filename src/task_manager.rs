@@ -1,22 +1,46 @@
 use std::collections::BTreeMap;
 
+use anyhow::Result;
+
 use chrono::Duration;
+use serde::{Deserialize, Serialize};
 
-use crate::task::{Task, State};
+use crate::{
+    task::{State, Task},
+    task_serializer::{TaskDeserializer, TaskSerializer},
+};
 
-#[derive(Debug)]
+const TASK_FILE_PATH: &str = "tasks.json";
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct TaskManager {
     tasks_map: BTreeMap<u32, Task>,
 }
 
 impl TaskManager {
     pub fn new() -> TaskManager {
-        TaskManager {
-            tasks_map: BTreeMap::new(),
+        let task_file = std::fs::read_to_string(TASK_FILE_PATH).unwrap_or_default();
+
+        match TaskDeserializer::deserialize(task_file) {
+            Ok(tasks) => tasks,
+            Err(_) => TaskManager {
+                tasks_map: BTreeMap::new(),
+            },
         }
     }
 
-    pub fn add_task(&mut self, task: Task) {
+    pub fn save(&self) -> Result<()> {
+        let task_file_str = TaskSerializer::serialize(self)?;
+
+        std::fs::write(TASK_FILE_PATH, task_file_str)?;
+
+        Ok(())
+    }
+
+    pub fn add_task(&mut self, mut task: Task) {
+        let id = self.tasks_map.len() as u32;
+        task.id = id;
+
         self.tasks_map.insert(self.tasks_map.len() as u32, task);
     }
 

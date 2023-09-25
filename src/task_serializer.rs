@@ -1,10 +1,11 @@
-use crate::task::Task;
 use anyhow::Result;
+
+use crate::task_manager::TaskManager;
 
 pub enum TaskSerializer {}
 
 impl TaskSerializer {
-    pub fn serialize(&self, task: &Task) -> Result<String> {
+    pub fn serialize(task: &TaskManager) -> Result<String> {
         Ok(serde_json::to_string(&task)?)
     }
 }
@@ -12,10 +13,7 @@ impl TaskSerializer {
 pub enum TaskDeserializer {}
 
 impl TaskDeserializer {
-    pub fn deserialize(&self, file_path: &str) -> Result<Task> {
-        let serialized_task = std::fs::read_to_string(file_path)?;
-        let task = serde_json::from_str(&serialized_task)?;
-
-        Ok(task)
+    pub fn deserialize(task_file_str: String) -> Result<TaskManager> {
+        Ok(serde_json::from_str(&task_file_str)?)
     }
 }
