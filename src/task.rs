@@ -1,3 +1,5 @@
+use std::fmt::{Display, Formatter, self};
+
 use chrono::Duration;
 use serde::{Serialize, Deserialize};
 
@@ -5,6 +7,15 @@ use serde::{Serialize, Deserialize};
 pub enum State {
     InProgress,
     Done,
+}
+
+impl Display for State {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        match self {
+            State::InProgress => write!(f, "In Progress"),
+            State::Done => write!(f, "Done"),
+        }
+    }
 }
 
 #[serde_with::serde_as]

@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     task::{State, Task},
-    task_serializer::{TaskDeserializer, TaskSerializer},
+    task_serializer::{TaskDeserializer, TaskSerializer}, time_parser::TimeParser,
 };
 
 const TASK_FILE_PATH: &str = "tasks.json";
@@ -42,6 +42,16 @@ impl TaskManager {
         task.id = id;
 
         self.tasks_map.insert(self.tasks_map.len() as u32, task);
+    }
+
+    pub fn list_tasks(&self) {
+        for task in self.tasks_map.values() {
+            print!("ID: {}, ", task.id);
+            print!("Name: {}, ", task.name);
+            print!("Time Spent: {}, ", TimeParser::duration_to_string(&task.time_spent));
+            print!("Time Estimate: {}, ", TimeParser::duration_to_string(&task.time_estimated));
+            println!("State: {}, ", task.state);
+        }
     }
 
     pub fn log_time(&mut self, id: u32, time: Duration) {

@@ -20,11 +20,9 @@ fn main() {
                 .build();
 
             task_manager.add_task(task);
-
-            println!("{:?}", task_manager);
         }
         Commands::List(_) => {
-            println!("{:?}", task_manager);
+            task_manager.list_tasks();
         }
         Commands::LogTime(cmd_args) => {
             let time_logged = match TimeParser::parse(&cmd_args.time_logged) {
