@@ -1,10 +1,20 @@
 use chrono::Duration;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
+pub enum State {
+    InProgress,
+    Done,
+}
+
+#[serde_with::serde_as]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Task {
     pub id: u32,
     pub name: String,
+    #[serde_as(as = "serde_with::DurationSeconds<i64>")]
     pub time_spent: Duration,
+    #[serde_as(as = "serde_with::DurationSeconds<i64>")]
     pub time_estimated: Duration,
     pub state: State
 }
@@ -20,10 +30,3 @@ impl Task {
         }
     }
 }
-
-#[derive(Debug)]
-pub enum State {
-    InProgress,
-    Done
-}
-
