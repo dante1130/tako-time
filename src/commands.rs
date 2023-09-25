@@ -14,9 +14,9 @@ const TIME_ARGS_SIZE: usize = 4;
 
 #[derive(Args, Debug)]
 pub struct AddCommand {
-    #[arg(long, num_args = 1..)]
+    #[arg(long, num_args = 1.., required = true)]
     pub name: Vec<String>,
-    #[arg(long, num_args = 1..=TIME_ARGS_SIZE)]
+    #[arg(long, num_args = 1..=TIME_ARGS_SIZE, required = true)]
     pub time_estimated: Vec<String>,
 }
 
@@ -25,15 +25,15 @@ pub struct ListCommand {}
 
 #[derive(Args, Debug)]
 pub struct LogTimeCommand {
-    #[arg(long)]
+    #[arg(long, required = true)]
     pub id: u32,
-    #[arg(long, num_args = 1..=TIME_ARGS_SIZE)]
+    #[arg(long, num_args = 1..=TIME_ARGS_SIZE, required = true)]
     pub time_logged: Vec<String>,
 }
 
 #[derive(Args, Debug)]
 pub struct UpdateCommand {
-    #[arg(long)]
+    #[arg(long, required = true)]
     pub id: u32,
     #[arg(long, num_args = 0..=TIME_ARGS_SIZE)]
     pub time_spent: Option<Vec<String>>,
@@ -43,13 +43,13 @@ pub struct UpdateCommand {
 
 #[derive(Args, Debug)]
 pub struct RemoveCommand {
-    #[arg(long)]
+    #[arg(long, required = true)]
     pub id: u32,
 }
 
 #[derive(Args, Debug)]
 pub struct CompleteCommand {
-    #[arg(long)]
+    #[arg(long, required = true)]
     pub id: u32,
 }
 
